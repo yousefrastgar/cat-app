@@ -1,14 +1,14 @@
-import React, {Fragment} from 'react';
-import Header from './header/fullHeight1';
-import Footer from './footer/footerCurvedLight';
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
 
-const Layout = ({pageTitle, children}) => {
+const Layout = ({hideHeader = false, children}: { hideHeader?: boolean, children: React.ReactNode }) => {
     return (
-        <Fragment>
-            <Header pageTitle={pageTitle}/>
+        <>
+            {hideHeader ? null : <Header/>}
             {children}
             <Footer/>
-        </Fragment>
+        </>
     );
 }
 

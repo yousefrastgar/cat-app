@@ -12,20 +12,24 @@ export const request = {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error(String(response.status));
+                throw new Error(response.statusText);
             }
         });
     },
+
     post: async (formData: { [index: string]: any }, url: string, access_token: string, encode: boolean = false) => {
-        let formBody = [];
-        for (let key in formData) {
-            if (formData.hasOwnProperty(key)) {
-                let encodedKey: string = encodeURIComponent(key);
-                let encodedValue: string = encodeURIComponent(formData[key]);
-                formBody.push(encodedKey + "=" + encodedValue);
+        let formBodyString: string = "";
+        if (encode) {
+            let formBody = [];
+            for (let key in formData) {
+                if (formData.hasOwnProperty(key)) {
+                    let encodedKey: string = encodeURIComponent(key);
+                    let encodedValue: string = encodeURIComponent(formData[key]);
+                    formBody.push(encodedKey + "=" + encodedValue);
+                }
             }
+            formBodyString = formBody.join("&");
         }
-        let formBodyString: string = formBody.join("&");
         let headers;
         if (access_token !== null)
             headers = {
@@ -45,7 +49,7 @@ export const request = {
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error(String(response.status));
+                throw new Error(response.statusText);
             }
         });
     }
